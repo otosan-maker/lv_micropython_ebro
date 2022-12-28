@@ -24,10 +24,14 @@ make  BOARD=GENERIC_SPIRAM deploy
 make  BOARD=GALDEANO       deploy
 make  BOARD=M5CORE2        deploy
 ```
-GENERIC_SPIRAM : It is for development, it creates the firmware, but the filesystem is empty. We have to populate the filesystem with the GALDEANO_LV
-GALDEANO: It is for production, it compiles the firmware including the stable code from GALDEANO_LV, so the code for the calculator is in the frozen area
-M5CORE2: The M5 Core2 with a keyboard faces can run the calculator code, this is the firmware.
+- GENERIC_SPIRAM : It is for development, it creates the firmware, but the filesystem is empty. We have to populate the filesystem with the GALDEANO_LV.
+- GALDEANO: It is for production, it compiles the firmware including the stable code from GALDEANO_LV, so the code for the calculator is in the frozen area.
+- M5CORE2: The M5 Core2 with a keyboard faces can run the calculator code, this is the firmware.
 
+The main objetives in make are
+- make erase:  delete the flash, it we alter the partitions, or if it is the first instalation, we have to run it first
+- make clean: delete the compiled code
+- make deploy: it compiles and deploys the firmware to the esp32, PORT is set to the serial port (PORT=/dev/ttyUSB0, PORT=/dev/ttyACM0)
 
 ## More information
 

@@ -55,3 +55,7 @@ ports/esp32/build/*
 ports/esp32/build-GALDEANO/*
 ports/esp32/build-GENERIC_SPIRAM/*
 ports/esp32/build-M5CORE2/*
+lib/lv_bindings/pycparser/pycparser/__pycache__/*
+lib/lv_bindings/pycparser/pycparser/ply/__pycache__/*
+py/__pycache__/*
+

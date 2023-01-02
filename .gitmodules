@@ -1,0 +1,6 @@
+[submodule "ports/esp32/boards/GALDEANO/lv_galdeano/galdeano-lv"]
+	path = ports/esp32/boards/GALDEANO/lv_galdeano/galdeano-lv
+	url = https://github.com/otosan-maker/galdeano-lv.git
+[submodule "ports/esp32/boards/GALDEANO/galdeano-lv"]
+	path = ports/esp32/boards/GALDEANO/galdeano-lv
+	url = https://github.com/otosan-maker/galdeano-lv.git

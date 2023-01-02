@@ -18,7 +18,7 @@ class xpt2046:
     def __init__(self, miso=-1, mosi=-1, clk=-1, cs=21,
                  spihost=esp.HSPI_HOST, half_duplex=True, mhz=5, max_cmds=16,
                  cal_x0 = 352, cal_y0 = 416, cal_x1 = 3712, cal_y1 = 3792,
-                 transpose = True, inverted = True, samples = 3):
+                 transpose = True, inverted = False, samples = 3):
 
         # Initializations
 

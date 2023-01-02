@@ -1,10 +1,10 @@
-# Board files for M5Stack Core2
+# Board files for GALDEANO
 
 To use, follow the instructions in the [root README](../../../../README.md) for this repository as well as in the [README for the ESP32 port](../../README.md) to prepare the prerequisites. Then to compile, go to the `ports/esp32` directory and execute
 
 ```text
 export PORT=<your serial port>
-export BOARD=M5CORE2
+export BOARD=GALDEANO
 esptool.py erase_flash && \
 make submodules && \
 make -j $(nproc) && \

@@ -1,159 +1,37 @@
-# Micropython + lvgl
+# Micropython + lvgl GALDEANO VERSION
 
-[![Build lv_micropython unix port](https://github.com/lvgl/lv_micropython/actions/workflows/unix_port.yml/badge.svg)](https://github.com/lvgl/lv_micropython/actions/workflows/unix_port.yml)
-[![Build lv_micropython stm32 port](https://github.com/lvgl/lv_micropython/actions/workflows/stm32_port.yml/badge.svg)](https://github.com/lvgl/lv_micropython/actions/workflows/stm32_port.yml)
-[![esp32 port](https://github.com/lvgl/lv_micropython/actions/workflows/ports_esp32.yml/badge.svg)](https://github.com/lvgl/lv_micropython/actions/workflows/ports_esp32.yml) [![Build lv_micropython rp2 port](https://github.com/lvgl/lv_micropython/actions/workflows/rp2_port.yml/badge.svg)](https://github.com/lvgl/lv_micropython/actions/workflows/rp2_port.yml)
 
-[![Open in Gitpod](https://gitpod.io/button/open-in-gitpod.svg)](https://gitpod.io/#https://github.com/lvgl/lv_micropython)  
-With GitPod you can edit, build and run Micropython + LVGL from your web browser!
+## WHAT IS THIS
 
-To quickly run Micropython + LVGL from your web browser you can also use the [Online Simulator](https://sim.lvgl.io/v8.1/micropython/ports/javascript/index.html).
-
-**For information abound Micropython lvgl bindings please refer to [lv_binding_micropython/README.md](https://github.com/lvgl/lv_binding_micropython/blob/master/README.md)**
-
-See also [Micropython + LittlevGL](https://blog.lvgl.io/2019-02-20/micropython-bindings) blog post. (LittlevGL is LVGL's previous name.)  
-For questions and discussions - please use the forum: https://forum.lvgl.io/c/micropython
-
-Original micropython README: https://github.com/micropython/micropython/blob/master/README.md
-
-## Relationship between `lv_micropython` and `lv_binding_micropython`
-
-Originally, `lv_micropython` was created as an example of how to use [lv_binding_micropython](https://github.com/lvgl/lv_binding_micropython) on a Micropython fork.  
-As such, we try to keep changes here as minimal as possible and we try to keep it in sync with Micropython upstream releases. We also try to add changes to `lv_binding_micropython` instead of to `lv_micropython`, when possible. (for example we keep all drivers in `lv_binding_micropython`, the ESP32 CMake functionality etc.)
-
-Eventually it turned out that many people prefer using `lv_micropython` directly and only a few use it as a reference to support LVGL on their own Micropython fork.
-If you are only starting with Micropython+LVGL, it's recommended that you use `lv_micropython`, while porting a Micropython fork to LVGL is for advanced users.
+I have created a special handheld calculator, it runs in a version os lv_micropython that I am not able to manage with the original repository. So I have created a new one. But it is a derivate work from there.
+My hardware only runs on esp32, so it is the unique port than I have customiced.
+I have include a version of Eigenmath as a custom module, so we can use symbolic math inside the calculator.
+In the esp32 port it is also the code (LV micropython code) to run this calculator.
 
 ## Build Instructions
 
-### Unix (Linux) port
-
-1. `sudo apt-get install build-essential libreadline-dev libffi-dev git pkg-config libsdl2-2.0-0 libsdl2-dev python3.8 parallel`
-Python 3 is required, but you can install some other version of python3 instead of 3.8, if needed.
-2. `git clone https://github.com/lvgl/lv_micropython.git`
-3. `cd lv_micropython`
-4. `git submodule update --init --recursive lib/lv_bindings`
-5. `make -C mpy-cross`
-6. `make -C ports/unix submodules`
-7. `make -C ports/unix`
-8. `./ports/unix/micropython`
-
 ### ESP32 port
 
-Please set `ESPIDF` parameter for the esp-idf install dir.
-It needs to match Micropython expected esp-idf, otherwise a warning will be displayed (and build will probably fail)
-For more details refer to [Setting up the toolchain and ESP-IDF](https://github.com/lvgl/lv_micropython/blob/master/ports/esp32/README.md#setting-up-the-toolchain-and-esp-idf)
-
-When using IL9341 driver, the color depth and swap mode need to be set to match ILI9341. This can be done from the command line.
-Here is the command to build ESP32 + LVGL which is compatible with ILI9341 driver:
-
+For now we use ESP-IDF 4.02
+The first step is compile the cross compiler.
 ```
 make -C mpy-cross
-make -C ports/esp32 LV_CFLAGS="-DLV_COLOR_DEPTH=16 -DLV_COLOR_16_SWAP=1" BOARD=GENERIC_SPIRAM deploy
 ```
-
-Explanation about the paramters:
-- `LV_CFLAGS` are used to override color depth and swap mode, for ILI9341 compatibility.
-  - `LV_COLOR_DEPTH=16` is needed if you plan to use the ILI9341 driver.
-  - `LV_COLOR_16_SWAP=1` is needed if you plan to use the [Pure Micropython Display Driver](https://blog.lvgl.io/2019-08-05/micropython-pure-display-driver).
-- `BOARD` - I use WROVER board with SPIRAM. You can choose other boards from `ports/esp32/boards/` directory.
-- `deploy` - make command will create ESP32 port of Micropython, and will try to deploy it through USB-UART bridge.
-
-For more details please refer to [Micropython ESP32 README](https://github.com/micropython/micropython/blob/master/ports/esp32/README.md).
-
-### JavaScript port
-
-Refer to the README of the `lvgl_javascript` branch: https://github.com/lvgl/lv_micropython/tree/lvgl_javascript_v8#javascript-port
-
-### Raspberry Pi Pico port
-
-This port uses [Micropython infrastructure for C modules](https://docs.micropython.org/en/latest/develop/cmodules.html#compiling-the-cmodule-into-micropython) and `USER_C_MODULES` must be given:
-
+Then we cam create the firmware for our hardware
 ```
-cd ports/rp2
-make USER_C_MODULES=../../lv_bindings/bindings.cmake
+cd ports/esp32
+make  BOARD=GENERIC_SPIRAM deploy
+make  BOARD=GALDEANO       deploy
+make  BOARD=M5CORE2        deploy
 ```
+- GENERIC_SPIRAM : It is for development, it creates the firmware, but the filesystem is empty. We have to populate the filesystem with the GALDEANO_LV.
+- GALDEANO: It is for production, it compiles the firmware including the stable code from GALDEANO_LV, so the code for the calculator is in the frozen area.
+- M5CORE2: The M5 Core2 with a keyboard faces can run the calculator code, this is the firmware.
 
-## Super Simple Example
-
-First, LVGL needs to be imported and initialized
-
-```python
-import lvgl as lv
-lv.init()
-```
-
-Then display driver and input driver needs to be registered.
-Refer to [Porting the library](https://docs.lvgl.io/8.0/porting/index.html) for more information.
-Here is an example of registering SDL drivers on Micropython unix port:
-
-```python
-import SDL
-SDL.init()
-
-# Register SDL display driver.
-
-draw_buf = lv.disp_draw_buf_t()
-buf1_1 = bytearray(480*10)
-draw_buf.init(buf1_1, None, len(buf1_1)//4)
-disp_drv = lv.disp_drv_t()
-disp_drv.init()
-disp_drv.draw_buf = draw_buf
-disp_drv.flush_cb = SDL.monitor_flush
-disp_drv.hor_res = 480
-disp_drv.ver_res = 320
-disp_drv.register()
-
-# Regsiter SDL mouse driver
-
-indev_drv = lv.indev_drv_t()
-indev_drv.init()
-indev_drv.type = lv.INDEV_TYPE.POINTER
-indev_drv.read_cb = SDL.mouse_read
-indev_drv.register()
-```
-
-Here is an alternative example, for registering ILI9341 drivers on Micropython ESP32 port:
-
-```python
-import lvgl as lv
-
-# Import ILI9341 driver and initialized it
-
-from ili9341 import ili9341
-disp = ili9341()
-
-# Import XPT2046 driver and initalize it
-
-from xpt2046 import xpt2046
-touch = xpt2046()
-```
-
-By default, both ILI9341 and XPT2046 are initialized on the same SPI bus with the following parameters:
-
-- ILI9341: `miso=5, mosi=18, clk=19, cs=13, dc=12, rst=4, power=14, backlight=15, spihost=esp.HSPI_HOST, mhz=40, factor=4, hybrid=True`
-- XPT2046: `cs=25, spihost=esp.HSPI_HOST, mhz=5, max_cmds=16, cal_x0 = 3783, cal_y0 = 3948, cal_x1 = 242, cal_y1 = 423, transpose = True, samples = 3`
-
-You can change any of these parameters on ili9341/xpt2046 constructor.
-You can also initalize them on different SPI buses if you want, by providing miso/mosi/clk parameters. Set them to -1 to use existing (initialized) spihost bus.
-
-Now you can create the GUI itself:
-
-```python
-
-# Create a screen with a button and a label
-
-scr = lv.obj()
-btn = lv.btn(scr)
-btn.align_to(lv.scr_act(), lv.ALIGN.CENTER, 0, 0)
-label = lv.label(btn)
-label.set_text("Hello World!")
-
-# Load the screen
-
-lv.scr_load(scr)
-
-```
+The main objetives in make are
+- make erase:  delete the flash, it we alter the partitions, or if it is the first instalation, we have to run it first
+- make clean: delete the compiled code
+- make deploy: it compiles and deploys the firmware to the esp32, PORT is set to the serial port (PORT=/dev/ttyUSB0, PORT=/dev/ttyACM0)
 
 ## More information
 

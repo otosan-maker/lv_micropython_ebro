@@ -1,6 +1,13 @@
 # Micropython + lvgl GALDEANO VERSION
 
+We have linked our custom micropython code with the code to develop the GALDEANO handheld computer. It is a submodule in the GALDEANO board code.
+You have to run this commands in a linux shell to get the code.
 
+```
+git clone https://github.com/otosan-maker/lv_micropython_ebro.git
+cd lv_micropython_ebro
+git submodule update --init --recursive ports/esp32/boards/GALDEANO/galdeano-lv
+```
 ## WHAT IS THIS
 
 I have created a special handheld calculator, it runs in a version os lv_micropython that I am not able to manage with the original repository. So I have created a new one. But it is a derivate work from there.

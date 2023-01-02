@@ -50,3 +50,8 @@ modules.order
 Module.symvers
 Mkfile.old
 dkms.conf
+mpy-cross/build/*
+ports/esp32/build/*
+ports/esp32/build-GALDEANO/*
+ports/esp32/build-GENERIC_SPIRAM/*
+ports/esp32/build-M5CORE2/*

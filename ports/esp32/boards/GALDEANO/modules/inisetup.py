@@ -1,4 +1,5 @@
 import uos
+import os
 from flashbdev import bdev
 
 
@@ -36,14 +37,18 @@ def setup():
     uos.VfsLfs2.mkfs(bdev)
     vfs = uos.VfsLfs2(bdev)
     uos.mount(vfs, "/")
-    with open("boot.py", "w") as f:
+    os.mkdir("data")
+    with open("/data/graf.txt", "w") as f:
         f.write(
             """\
-# GALDEANO
-#import esp
-#esp.osdebug(None)
-#import webrepl
-#webrepl.start()
+{"Tmin": 0, "Xmax": 5, "function_y_t": "0.2*t*sin(t)", "function_x_t": "0.3*t*cos(t)", "parametric": 0, "Tmax": 15, "Ymax": 1.2, "Ymin": -1.5, "Xmin": -5, "function": "2*cos(x)"}
 """
         )
+    with open("/data/wifi.txt", "w") as f:
+        f.write(
+            """\
+{"network": "net", "startupInit": false, "password": "pass"}
+"""
+        )
+
     return vfs

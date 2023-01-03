@@ -18,7 +18,7 @@ GIT_SUBMODULES = lib/berkeley-db-1.xx
 
 .PHONY: all clean deploy erase submodules FORCE
 
-CMAKE_ARGS = -DUSER_C_MODULES=/home/angel/working-tmp/micropython/lv_micropython/usermod/snippets/eigenmath/eigenmath.cmake
+CMAKE_ARGS = -DUSER_C_MODULES=../../../usermod/snippets/eigenmath/eigenmath.cmake
 
 ifdef USER_C_MODULES
 	CMAKE_ARGS += -DUSER_C_MODULES=${USER_C_MODULES}

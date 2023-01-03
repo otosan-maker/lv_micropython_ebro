@@ -58,4 +58,5 @@ ports/esp32/build-M5CORE2/*
 lib/lv_bindings/pycparser/pycparser/__pycache__/*
 lib/lv_bindings/pycparser/pycparser/ply/__pycache__/*
 py/__pycache__/*
-
+ports/esp32/build-GALDENANO/CMakeFiles/cmake.check_cache
+lib/lv_bindings/pycparser/pycparser/ply/__pycache__/yacc.cpython-38.pyc

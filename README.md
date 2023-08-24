@@ -19,8 +19,18 @@ In the esp32 port it is also the code (LV micropython code) to run this calculat
 
 ### ESP32 port
 
-For now we use ESP-IDF 4.02
-The first step is compile the cross compiler.
+For now we use ESP-IDF 4.02, to install it we need to follow this steps:
+```
+(in a Ubunto like distro)
+ apt-get install git wget flex bison gperf python3 python3-pip python3-venv cmake ninja-build ccache libffi-dev libssl-dev dfu-util libusb-1.0-0
+
+ git clone -b v4.0.2 --recursive https://github.com/espressif/esp-idf.git
+ cd ~/esp/esp-idf
+ ./install.sh esp32   (./install.sh esp32,esp32s2)
+ . ./export.sh
+```
+Back to the Micropython firmware.
+The first step is compile the cross compiler. Execute this command from the lv_micropython_ebro directory.
 ```
 make -C mpy-cross
 ```

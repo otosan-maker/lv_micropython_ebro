@@ -26,7 +26,7 @@ For now we use ESP-IDF 4.02, to install it we need to follow this steps:
 
  git clone -b v4.0.2 --recursive https://github.com/espressif/esp-idf.git
  cd ~/esp/esp-idf
- ./install.sh esp32   (./install.sh esp32,esp32s2)
+ ./install.sh esp32  
  . ./export.sh
 ```
 Back to the Micropython firmware.

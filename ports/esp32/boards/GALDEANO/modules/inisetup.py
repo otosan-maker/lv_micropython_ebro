@@ -37,6 +37,7 @@ def setup():
     uos.VfsLfs2.mkfs(bdev)
     vfs = uos.VfsLfs2(bdev)
     uos.mount(vfs, "/")
+    os.mkdir("prog")
     os.mkdir("data")
     with open("/data/graf.txt", "w") as f:
         f.write(

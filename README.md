@@ -1,12 +1,13 @@
 # Micropython + lvgl GALDEANO VERSION
 
-We have linked our custom micropython code with the code to develop the GALDEANO handheld computer. It is a submodule in the GALDEANO board code.
+We have linked our custom micropython code with the code to develop the GALDEANO handheld computer. 
+It is not updating the code when we used it as a submodule, so I have add it as a new repository.
 You have to run this commands in a linux shell to get the code.
 
 ```
 git clone https://github.com/otosan-maker/lv_micropython_ebro.git
-cd lv_micropython_ebro
-git submodule update --init --recursive ports/esp32/boards/GALDEANO/galdeano-lv
+cd lv_micropython_ebro/ports/esp32/boards/GALDEANO/
+git clone https://github.com/otosan-maker/galdeano_lv.git
 ```
 ## WHAT IS THIS
 
